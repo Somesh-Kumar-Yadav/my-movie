@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      .nav-bar {
+        height: 40px;
+        background: #a8780d;
+        opacity: 0.75;
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      .nav-bar div {
+        display: flex;
+        margin: 10px;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+      }
+      .nav-bar div li {
+        list-style: none;
+        margin-left: 10px;
+        color: white;
+        font-size: 1rem;
+      }
+      .nav-bar div li:hover,
+      #active {
+        color: #3c4858;
+        cursor: pointer;
+        font-size: 0.99rem;
+      }
+      .form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      form {
+        width: 30%;
+        margin-left: 35%;
+        margin-top: 5%;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+      form input,
+      form button {
+        margin: 15px;
+      }
+      form input {
+        border: none;
+        border-bottom: 1px solid black;
+        font-size: 0.8rem;
+        padding: 2px;
+        width: 20rem;
+      }
+      button {
+        border: none;
+        cursor: pointer;
+        width: 5rem;
+        height: 2rem;
+        background: green;
+        color: antiquewhite;
+      }
+      h2 {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar">
+      <div>
+        <li onclick="home()">HOME</li>
+        <li onclick="login()">LOGIN</li>
+        <li id="active" onclick="signup()">SIGN UP</li>
+      </div>
+    </div>
+    <div id="form">
+      <form id="submitForm">
+        <h2>SIGN UP</h2>
+        <input type="text" placeholder="Enter your name" id="name" />
+        <input type="tel" placeholder="Contact No." id="contact" />
+        <input type="email" placeholder="Enter your E-mail" id="email" />
+        <input type="password" placeholder="Create password" id="password" />
+        <button onclick="signUp(event)">Sign up</button>
+      </form>
+    </div>
+  </body>
+</html>
+<script>
+  function signUp(e) {
+    e.preventDefault();
+    let name = document.getElementById("name").value;
+    let contact = document.getElementById("contact").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    if (name == "" || contact == "" || password == "" || email == "") {
+      alert("Something is missing !!!");
+    } else {
+      let user = {
+        name: name,
+        password: password,
+        contact: contact,
+        email: email,
+      };
+      let arr;
+      let value = true;
+      arr = localStorage.getItem("users");
+      if (arr == null) {
+        arr = [];
+      } else {
+        arr = JSON.parse(arr);
+      }
+      for (let i = 0; i < arr.length; i++) {
+        if (user.email == arr[i].email) {
+          value = false;
+          alert("Already registered with this account");
+          break;
+        }
+      }
+      if (value) {
+        arr.push(user);
+        localStorage.setItem("users", JSON.stringify(arr));
+        alert("Successful Signup");
+      }
+    }
+  }
+  function home() {
+    window.location.href = "home.html";
+  }
+  function login() {
+    window.location.href = "login.html";
+  }
+  function signup() {
+    window.location.href = "signup.html";
+  }
+</script>

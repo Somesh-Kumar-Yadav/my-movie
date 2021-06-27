@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      .nav-bar {
+        height: 40px;
+        background: #a8780d;
+        opacity: 0.75;
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      .nav-bar div {
+        display: flex;
+        margin: 10px;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+      }
+      .nav-bar div li {
+        list-style: none;
+        margin-left: 10px;
+        color: white;
+        font-size: 1rem;
+      }
+      .nav-bar div li:hover,
+      #active {
+        color: #3c4858;
+        cursor: pointer;
+        font-size: 0.99rem;
+      }
+      #cont {
+        width: 100vw;
+        margin-top: 4px;
+      }
+      .image {
+        width: 100%;
+        height: 75vh;
+      }
+      #cont_2 {
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      #cont_2 > div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        text-align: center;
+      }
+      .mov_img {
+        width: 50%;
+        margin-left: 25%;
+        height: 200px;
+      }
+      h3 {
+        text-align: right;
+        color: #3c4858;
+        font-size: 1rem;
+        display: block;
+        margin: 10px;
+      }
+      .btn {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        flex-direction: row-reverse;
+        align-items: center;
+        margin: 10px;
+      }
+      .btn > button {
+        font-size: 0.9rem;
+        border: none;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar">
+      <div>
+        <li id="active" onclick="home()">HOME</li>
+        <li onclick="login()">LOGIN</li>
+        <li onclick="signup()">SIGN UP</li>
+      </div>
+    </div>
+    <div id="cont"></div>
+    <h3>--- Sort on the basis of ---</h3>
+    <div class="btn">
+      <button id="lth" onclick="lth()">Increasing rating.</button>
+      <button id="htl" onclick="htl()">Decreasing rating.</button>
+      <button id="date" onclick="date()">Release date.</button>
+    </div>
+    <div id="cont_2"></div>
+  </body>
+</html>
+<script>
+  function home() {
+    window.location.href = "home.html";
+  }
+  function login() {
+    window.location.href = "login.html";
+  }
+  function signup() {
+    window.location.href = "signup.html";
+  }
+  let i = 0;
+  const ar = [
+    "poster/movie1.jpg",
+    "poster/movie2.jpg",
+    "poster/movie3.jpg",
+    "poster/movie4.jpg",
+    "poster/movie5.jpg",
+  ];
+  let c = document.getElementById("cont");
+  c.innerHTML = `<img src=${ar[ar.length - 1]} class="image"/>`;
+
+  setInterval(function () {
+    c.innerHTML = `<img src=${ar[i]} class="image"/>`;
+    i++;
+    if (i == ar.length) {
+      i = 0;
+    }
+  }, 3000);
+  const movie = [
+    {
+      name: "The Dark Knight",
+      date: 2008,
+      url: "https://posterspy.com/wp-content/uploads/2020/04/TDK_Poster-1500x2222.jpg",
+      rating: 9,
+    },
+    {
+      name: "The Prestige",
+      date: 2006,
+      url: "https://movieposters2.com/images/634831-b.jpg",
+      rating: 8.5,
+    },
+    {
+      name: "The Shawshank Redemption",
+      date: 1994,
+      url: "https://miro.medium.com/max/1024/1*ZuyHle2wBnM1MY0xkIa9hA.jpeg",
+      rating: 9.3,
+    },
+    {
+      name: "The Departed",
+      date: 2006,
+      url: "https://wallpapercave.com/wp/wp2329753.jpg",
+      rating: 8.5,
+    },
+    {
+      name: "Batman Begins",
+      date: 2005,
+      url: "https://i.pinimg.com/originals/7a/46/04/7a46046da3597c78b5b86f07eb6bc1c4.jpg",
+      rating: 8.2,
+    },
+    {
+      name: "Ed Wood",
+      date: 1994,
+      url: "https://images-na.ssl-images-amazon.com/images/I/51AkKE81LCL._AC_.jpg",
+      rating: 7.8,
+    },
+    {
+      name: "The Godfather",
+      date: 1972,
+      url: "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/73/23/1c.jpg",
+      rating: 9.2,
+    },
+    {
+      name: "Forrest Gump",
+      date: 1994,
+      url: "https://i.pinimg.com/originals/16/30/79/163079bbd395e5176f5906e3c15fab99.jpg",
+      rating: 8.8,
+    },
+    {
+      name: "L.A. Confidential",
+      date: 1997,
+      url: "https://www.themoviedb.org/t/p/original/lWCgf5sD5FpMljjpkRhcC8pXcch.jpg",
+      rating: 8.2,
+    },
+  ];
+  localStorage.setItem("movies", JSON.stringify(movie));
+  let movies = JSON.parse(localStorage.getItem("movies"));
+  let b = document.getElementById("cont_2");
+  for (let i = 0; i < movies.length; i++) {
+    let film = document.createElement("div");
+    film.setAttribute("class", "movie_div");
+    let img = document.createElement("img");
+    img.src = `${movies[i].url}`;
+    img.setAttribute("class", "mov_img");
+    let name = document.createElement("p");
+    let date = document.createElement("p");
+    let rating = document.createElement("p");
+    name.innerHTML = `${movies[i].name}`;
+    date.innerHTML = `Release: ${movies[i].date}`;
+    rating.innerHTML = `Rating: ${movies[i].rating}`;
+    film.append(img, name, date, rating);
+    b.append(film);
+  }
+  function lth() {
+    movies = movies.sort(function (a, b) {
+      return a.rating - b.rating;
+    });
+    let b = document.getElementById("cont_2");
+    b.innerHTML = null;
+    for (let i = 0; i < movies.length; i++) {
+      let film = document.createElement("div");
+      film.setAttribute("class", "movie_div");
+      let img = document.createElement("img");
+      img.src = `${movies[i].url}`;
+      img.setAttribute("class", "mov_img");
+      let name = document.createElement("p");
+      let date = document.createElement("p");
+      let rating = document.createElement("p");
+      name.innerHTML = `${movies[i].name}`;
+      date.innerHTML = `Release: ${movies[i].date}`;
+      rating.innerHTML = `Rating: ${movies[i].rating}`;
+      film.append(img, name, date, rating);
+      b.append(film);
+    }
+  }
+  function htl() {
+    movies = movies.sort(function (a, b) {
+      return b.rating - a.rating;
+    });
+    let b = document.getElementById("cont_2");
+    b.innerHTML = null;
+    for (let i = 0; i < movies.length; i++) {
+      let film = document.createElement("div");
+      film.setAttribute("class", "movie_div");
+      let img = document.createElement("img");
+      img.src = `${movies[i].url}`;
+      img.setAttribute("class", "mov_img");
+      let name = document.createElement("p");
+      let date = document.createElement("p");
+      let rating = document.createElement("p");
+      name.innerHTML = `${movies[i].name}`;
+      date.innerHTML = `Release: ${movies[i].date}`;
+      rating.innerHTML = `Rating: ${movies[i].rating}`;
+      film.append(img, name, date, rating);
+      b.append(film);
+    }
+  }
+  function date() {
+    movies = movies.sort(function (a, b) {
+      return a.date - b.date;
+    });
+    let b = document.getElementById("cont_2");
+    b.innerHTML = null;
+    for (let i = 0; i < movies.length; i++) {
+      let film = document.createElement("div");
+      film.setAttribute("class", "movie_div");
+      let img = document.createElement("img");
+      img.src = `${movies[i].url}`;
+      img.setAttribute("class", "mov_img");
+      let name = document.createElement("p");
+      let date = document.createElement("p");
+      let rating = document.createElement("p");
+      name.innerHTML = `${movies[i].name}`;
+      date.innerHTML = `Release: ${movies[i].date}`;
+      rating.innerHTML = `Rating: ${movies[i].rating}`;
+      film.append(img, name, date, rating);
+      b.append(film);
+    }
+  }
+</script>
